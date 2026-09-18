@@ -4,7 +4,6 @@ import { MyStore } from "../Context/MyStore";
 
 const ProductCard = ({ product, isProduct}) => {
   const { setCartItems, increment, decrement } = useContext(MyStore);
-  
   return (
     <div className="group w-full max-w-sm overflow-hidden rounded-2xl bg-white shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl">
       <div className="relative flex h-64 items-center justify-center bg-slate-100 p-6">
@@ -56,7 +55,7 @@ const ProductCard = ({ product, isProduct}) => {
             </p>
           </div>
 
-          {isProduct  ? (
+          {isProduct && isProduct.quantity  ? (
             <button className="flex items-center overflow-hidden rounded-lg border border-gray-300 bg-white shadow-sm">
               <span
                 onClick={() => decrement(product.id)}
@@ -68,7 +67,8 @@ const ProductCard = ({ product, isProduct}) => {
                 {isProduct.quantity}
               </span>
               <span
-                onClick={() => increment(product.id)}
+                onClick={ () =>increment(product.id)
+                  }
                 className="flex h-9 w-9 cursor-pointer items-center justify-center text-lg font-medium transition hover:bg-gray-100"
               >
                 +

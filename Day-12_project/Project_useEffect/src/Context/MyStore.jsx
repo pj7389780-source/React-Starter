@@ -32,7 +32,7 @@ export const ContextProvider = ({children})=>{
           isCartOpen,
           setIsCartOpen,
           increment,
-          decrement
+          decrement,
         }}
       >
         {children}

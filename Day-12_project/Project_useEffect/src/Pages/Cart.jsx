@@ -95,7 +95,7 @@ const Cart = () => {
                         {" "}
                         <Minus size={16} />{" "}
                       </button>{" "}
-                      <span className="px-3 text-sm font-semibold"> 1 </span>{" "}
+                      <span className="px-3 text-sm font-semibold"> 1specail </span>{" "}
                       <button className="cursor-pointer p-2 hover:bg-slate-100">
                         {" "}
                         <Plus size={16} />{" "}

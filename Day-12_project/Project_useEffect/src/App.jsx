@@ -7,7 +7,7 @@ import { MyStore } from './Context/MyStore'
 
 
 const App =  () => {
-  const { setDataSet, dataSet, isCartOpen, cartItems } = useContext(MyStore);
+  const { setDataSet,isProduct, dataSet, isCartOpen, cartItems } = useContext(MyStore);
   const getData = async ()=>{
     let data = await axios.get("https://fakestoreapi.com/products");
    setDataSet(data.data) 
@@ -20,10 +20,9 @@ const App =  () => {
       <Navbar />
       {isCartOpen ? (
         <div className="grid grid-cols-4 gap-4 px-5">
-          {dataSet.map((elem,index) => {
+          {
+          dataSet.map((elem) => {
             let isProduct = cartItems.find((val)=>val.id === elem.id)
-            console.log(isProduct);
-            
             return (
               <ProductCard 
               isProduct={isProduct} 
