@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { MyStore } from "../Context/MyStore";
 
 const ProductCard = ({ product, isProduct}) => {
-  const { setCartItems, increment, decrement } = useContext(MyStore);
+  const { addToCart, increment, decrement } = useContext(MyStore);
   return (
     <div className="group w-full max-w-sm overflow-hidden rounded-2xl bg-white shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl">
       <div className="relative flex h-64 items-center justify-center bg-slate-100 p-6">
@@ -76,9 +76,7 @@ const ProductCard = ({ product, isProduct}) => {
             </button>
           ) : (
             <button
-              onClick={() => {
-                setCartItems((prev) => [...prev, { ...product, quantity: 1 }]);
-              }}
+              onClick={() => addToCart(product)}
               className="flex items-center gap-2 rounded-xl bg-black px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 active:scale-95"
             >
               <ShoppingCart size={18} />

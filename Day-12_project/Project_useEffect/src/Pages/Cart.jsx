@@ -1,19 +1,21 @@
 import React, { useContext } from "react";
 import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
 import { MyStore } from "../Context/MyStore";
+import { useNavigate } from "react-router";
+
 
 const Cart = () => {
-  const {cartItems,setCartItems } = useContext(MyStore);
-
+  const { cartItems, setCartItems, increment, decrement } = useContext(MyStore);
+  
+  const navigate = useNavigate();
   const cartRemove = (id)=>{
         let products = cartItems.filter((elem) => elem.id !== id);
         setCartItems(products)
   }
-
   const subtotal = cartItems.reduce((total, item) => {
-    return total + item.price;
+    return total + item.price*item.quantity;
   }, 0);
-  const shipping = subtotal > 100 ? 0 : 0;
+  const shipping = subtotal > 100 ? 10 : 0;
   const total = subtotal + shipping;
   return (
     <div className="min-h-screen bg-slate-50 px-6 py-10">
@@ -24,7 +26,8 @@ const Cart = () => {
         <h1 className="text-3xl font-bold text-slate-900"> Your Cart </h1>{" "}
         <p className="mt-1 text-sm text-slate-500">
           {" "}
-          {cartItems.length} {cartItems.length === 1 ? "item" : "items"} in your cart{" "}
+          {cartItems.length} {cartItems.length === 1 ? "item" : "items"} in your
+          cart{" "}
         </p>{" "}
       </div>{" "}
       <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-3">
@@ -79,8 +82,9 @@ const Cart = () => {
                     </div>{" "}
                     {/* Delete */}{" "}
                     <button
-                    onClick={()=>cartRemove(item.id)}
-                     className="cursor-pointer text-slate-400 transition hover:text-red-500">
+                      onClick={() => cartRemove(item.id)}
+                      className="cursor-pointer text-slate-400 transition hover:text-red-500"
+                    >
                       {" "}
                       <Trash2 size={19} />{" "}
                     </button>{" "}
@@ -91,12 +95,21 @@ const Cart = () => {
                     {/* Quantity */}{" "}
                     <div className="flex items-center rounded-lg border border-slate-200">
                       {" "}
-                      <button className="cursor-pointer p-2 hover:bg-slate-100">
+                      <button
+                        onClick={() => decrement(item.id)}
+                        className="cursor-pointer p-2 hover:bg-slate-100"
+                      >
                         {" "}
                         <Minus size={16} />{" "}
                       </button>{" "}
-                      <span className="px-3 text-sm font-semibold"> 1specail </span>{" "}
-                      <button className="cursor-pointer p-2 hover:bg-slate-100">
+                      <span className="px-3 text-sm font-semibold">
+                        {" "}
+                        {item.quantity}{" "}
+                      </span>{" "}
+                      <button
+                        onClick={() => increment(item.id)}
+                        className="cursor-pointer p-2 hover:bg-slate-100"
+                      >
                         {" "}
                         <Plus size={16} />{" "}
                       </button>{" "}
@@ -150,13 +163,16 @@ const Cart = () => {
                 ${total.toFixed(2)}{" "}
               </span>{" "}
             </div>{" "}
-            <button className="mt-6 w-full cursor-pointer rounded-xl bg-black py-3.5 font-semibold text-white transition hover:bg-slate-800 active:scale-[0.98]">
+            <button
+            onClick={() => navigate("/checkout")}
+             className="mt-6 w-full cursor-pointer rounded-xl bg-black py-3.5 font-semibold text-white transition hover:bg-slate-800 active:scale-[0.98]">
               {" "}
               Checkout{" "}
             </button>{" "}
           </div>{" "}
         </div>{" "}
       </div>{" "}
+      
     </div>
   );
 };

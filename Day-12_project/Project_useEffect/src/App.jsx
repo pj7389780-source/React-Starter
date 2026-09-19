@@ -4,8 +4,6 @@ import Navbar from './components/Navbar'
 import ProductCard from './components/ProducCard'
 import Cart from './Pages/Cart'
 import { MyStore } from './Context/MyStore'
-
-
 const App =  () => {
   const { setDataSet,isProduct, dataSet, isCartOpen, cartItems } = useContext(MyStore);
   const getData = async ()=>{
@@ -20,24 +18,22 @@ const App =  () => {
       <Navbar />
       {isCartOpen ? (
         <div className="grid grid-cols-4 gap-4 px-5">
-          {
-          dataSet.map((elem) => {
-            let isProduct = cartItems.find((val)=>val.id === elem.id)
+          {dataSet.map((elem) => {
+            let isProduct = cartItems.find((val) => val.id === elem.id);
             return (
-              <ProductCard 
-              isProduct={isProduct} 
-              key={elem.id} 
-              product={elem}/>
+              <ProductCard isProduct={isProduct} key={elem.id} product={elem} />
             );
           })}
         </div>
       ) : (
         <div>
-          <Cart/>
+          <Cart />
         </div>
       )}
+      
     </div>
   );
 }
+
 
 export default App
